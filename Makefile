@@ -9,7 +9,7 @@ test_oks = $(addsuffix .ok,$(test_exes))
 
 all: $(test_oks) $(test_exes) libsol.a
 
-CFLAGS += -Werror,-Wgnu-folding-constan -Wall -Wextra -pedantic -Wshadow -Wcast-qual -Wcast-align -Wno-unused-parameter
+CFLAGS += -Werror -Wall -Wextra -pedantic -Wshadow -Wcast-qual -Wcast-align -Wno-unused-parameter -Wno-gnu-folding-constant
 CFLAGS += -fPIC
 CFLAGS += -Iinclude
 CFLAGS += $($(mode)_CFLAGS)
