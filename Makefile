@@ -2,13 +2,30 @@ mode = release
 target := $(shell uname -s)
 variant = $(target)_$(mode)
 o = target/$(variant)
-
+ifeq ($(EMULATOR),1)
+CC       ?= gcc
+LD       := $(CC)
+OBJCOPY  := objcopy
+OBJDUMP  := objdump
+AR       := ar
+AS       := as
+else
+PREFIX   ?= arm-none-eabi-
+CC       := $(PREFIX)gcc
+LD       := $(PREFIX)gcc
+OBJCOPY  := $(PREFIX)objcopy
+OBJDUMP  := $(PREFIX)objdump
+AR       := $(PREFIX)ar
+AS       := $(PREFIX)as
+endif
 test_files := $(wildcard *_test.c)
 test_exes = $(patsubst %.c,$o/%,$(test_files))
 test_oks = $(addsuffix .ok,$(test_exes))
-
+ifeq ($(EMULATOR),1)
 all: $(test_oks) $(test_exes) libsol.a
-
+else
+all: libsol.a
+endif
 CFLAGS += -Werror -Wall -Wextra -pedantic -Wshadow -Wcast-qual -Wcast-align -Wno-unused-parameter -Wno-gnu-folding-constant
 CFLAGS += -fPIC
 CFLAGS += -Iinclude
@@ -54,4 +71,4 @@ libsol.a: $(libsol_object_files)
 .PHONY: clean
 clean:
 	@echo "==> Clean build directory"
-	rm -rf target
+	rm -rf target libsol.a
