@@ -27,12 +27,11 @@ else
 all: libsol.a
 endif
 CFLAGS += -Werror -Wall -Wextra -pedantic -Wshadow -Wcast-qual -Wcast-align -Wno-unused-parameter -Wno-gnu-folding-constant
-CFLAGS += -fPIC
 CFLAGS += -Iinclude
 CFLAGS += $($(mode)_CFLAGS)
 
 debug_CFLAGS = -g -fsanitize=address -fsanitize=undefined
-release_CFLAGS = -O2
+release_CFLAGS = -Os
 
 libsol_source_files = $(filter-out %_test.c,$(wildcard *.c))
 libsol_object_files = $(patsubst %.c,$o/%.o,$(libsol_source_files))
