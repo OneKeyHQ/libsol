@@ -17,6 +17,9 @@ OBJCOPY  := $(PREFIX)objcopy
 OBJDUMP  := $(PREFIX)objdump
 AR       := $(PREFIX)ar
 AS       := $(PREFIX)as
+
+CPUFLAGS ?= -mcpu=cortex-m3 -mthumb
+FPUFLAGS ?= -msoft-float
 endif
 test_files := $(wildcard *_test.c)
 test_exes = $(patsubst %.c,$o/%,$(test_files))
@@ -29,6 +32,8 @@ endif
 CFLAGS += -Werror -Wall -Wextra -pedantic -Wshadow -Wcast-qual -Wcast-align -Wno-unused-parameter -Wno-gnu-folding-constant
 CFLAGS += -Iinclude
 CFLAGS += $($(mode)_CFLAGS)
+CFLAGS += -ffunction-sections -fdata-sections $(CPUFLAGS) $(FPUFLAGS) 
+
 
 debug_CFLAGS = -g -fsanitize=address -fsanitize=undefined
 release_CFLAGS = -Os
