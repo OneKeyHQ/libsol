@@ -19,5 +19,5 @@ const char* get_token_symbol(const Pubkey* mint_address) {
       return ti->symbol;
     }
   }
-  return "???";
+  return "UNKN;
 }
