@@ -7,14 +7,9 @@
 #include <stdbool.h>
 #include <string.h>
 
-const Pubkey stake_program_id = {{
-    PROGRAM_ID_STAKE
-}};
+const Pubkey stake_program_id = {{PROGRAM_ID_STAKE}};
 
-static int parse_stake_instruction_kind(
-    Parser* parser,
-    enum StakeInstructionKind* kind
-) {
+static int parse_stake_instruction_kind(Parser* parser, enum StakeInstructionKind* kind) {
     uint32_t maybe_kind;
     BAIL_IF(parse_u32(parser, &maybe_kind));
     switch (maybe_kind) {
@@ -37,10 +32,7 @@ static int parse_stake_instruction_kind(
     return 1;
 }
 
-static int parse_stake_authorize(
-    Parser* parser,
-    enum StakeAuthorize* authorize
-) {
+static int parse_stake_authorize(Parser* parser, enum StakeAuthorize* authorize) {
     uint32_t maybe_authorize;
     BAIL_IF(parse_u32(parser, &maybe_authorize));
     switch (maybe_authorize) {
@@ -54,11 +46,9 @@ static int parse_stake_authorize(
 
 // Returns 0 and populates StakeDelegateInfo if provided a MessageHeader
 // and a delegate instruction, otherwise non-zero.
-static int parse_delegate_stake_instruction(
-    const Instruction* instruction,
-    const MessageHeader* header,
-    StakeDelegateInfo* info
-) {
+static int parse_delegate_stake_instruction(const Instruction* instruction,
+                                            const MessageHeader* header,
+                                            StakeDelegateInfo* info) {
     InstructionAccountsIterator it;
     instruction_accounts_iterator_init(&it, header, instruction);
 
@@ -75,12 +65,10 @@ static int parse_delegate_stake_instruction(
     return 0;
 }
 
-static int parse_stake_initialize_instruction(
-    Parser* parser,
-    const Instruction* instruction,
-    const MessageHeader* header,
-    StakeInitializeInfo* info
-) {
+static int parse_stake_initialize_instruction(Parser* parser,
+                                              const Instruction* instruction,
+                                              const MessageHeader* header,
+                                              StakeInitializeInfo* info) {
     InstructionAccountsIterator it;
     instruction_accounts_iterator_init(&it, header, instruction);
 
@@ -99,12 +87,12 @@ static int parse_stake_initialize_instruction(
     return 0;
 }
 
-static int parse_stake_initialize_checked_instruction(
-    Parser* parser,
-    const Instruction* instruction,
-    const MessageHeader* header,
-    StakeInitializeInfo* info
-) {
+static int parse_stake_initialize_checked_instruction(Parser* parser,
+                                                      const Instruction* instruction,
+                                                      const MessageHeader* header,
+                                                      StakeInitializeInfo* info) {
+    UNUSED(parser);
+
     InstructionAccountsIterator it;
     instruction_accounts_iterator_init(&it, header, instruction);
 
@@ -120,12 +108,10 @@ static int parse_stake_initialize_checked_instruction(
     return 0;
 }
 
-static int parse_stake_withdraw_instruction(
-    Parser* parser,
-    const Instruction* instruction,
-    const MessageHeader* header,
-    StakeWithdrawInfo* info
-) {
+static int parse_stake_withdraw_instruction(Parser* parser,
+                                            const Instruction* instruction,
+                                            const MessageHeader* header,
+                                            StakeWithdrawInfo* info) {
     InstructionAccountsIterator it;
     instruction_accounts_iterator_init(&it, header, instruction);
 
@@ -142,12 +128,10 @@ static int parse_stake_withdraw_instruction(
     return 0;
 }
 
-static int parse_stake_authorize_instruction(
-    Parser* parser,
-    const Instruction* instruction,
-    const MessageHeader* header,
-    StakeAuthorizeInfo* info
-) {
+static int parse_stake_authorize_instruction(Parser* parser,
+                                             const Instruction* instruction,
+                                             const MessageHeader* header,
+                                             StakeAuthorizeInfo* info) {
     InstructionAccountsIterator it;
     instruction_accounts_iterator_init(&it, header, instruction);
 
@@ -164,12 +148,10 @@ static int parse_stake_authorize_instruction(
     return 0;
 }
 
-static int parse_stake_authorize_checked_instruction(
-    Parser* parser,
-    const Instruction* instruction,
-    const MessageHeader* header,
-    StakeAuthorizeInfo* info
-) {
+static int parse_stake_authorize_checked_instruction(Parser* parser,
+                                                     const Instruction* instruction,
+                                                     const MessageHeader* header,
+                                                     StakeAuthorizeInfo* info) {
     InstructionAccountsIterator it;
     instruction_accounts_iterator_init(&it, header, instruction);
 
@@ -186,12 +168,12 @@ static int parse_stake_authorize_checked_instruction(
     return 0;
 }
 
-static int parse_stake_deactivate_instruction(
-    Parser* parser,
-    const Instruction* instruction,
-    const MessageHeader* header,
-    StakeDeactivateInfo* info
-) {
+static int parse_stake_deactivate_instruction(Parser* parser,
+                                              const Instruction* instruction,
+                                              const MessageHeader* header,
+                                              StakeDeactivateInfo* info) {
+    UNUSED(parser);
+
     InstructionAccountsIterator it;
     instruction_accounts_iterator_init(&it, header, instruction);
 
@@ -203,11 +185,7 @@ static int parse_stake_deactivate_instruction(
     return 0;
 }
 
-static int parse_stake_lockupargs(
-    Parser* parser,
-    StakeLockup* lockup,
-    bool parse_custodian
-) {
+static int parse_stake_lockupargs(Parser* parser, StakeLockup* lockup, bool parse_custodian) {
     // LockupArgs
     enum StakeLockupPresent present = StakeLockupHasNone;
     enum Option option;
@@ -218,7 +196,7 @@ static int parse_stake_lockupargs(
     }
     BAIL_IF(parse_option(parser, &option));
     if (option == OptionSome) {
-        BAIL_IF(parse_u64(parser, &lockup->epoch))
+        BAIL_IF(parse_u64(parser, &lockup->epoch));
         present |= StakeLockupHasEpoch;
     }
     if (parse_custodian) {
@@ -233,12 +211,10 @@ static int parse_stake_lockupargs(
     return 0;
 }
 
-static int parse_stake_set_lockup_instruction(
-    Parser* parser,
-    const Instruction* instruction,
-    const MessageHeader* header,
-    StakeSetLockupInfo* info
-) {
+static int parse_stake_set_lockup_instruction(Parser* parser,
+                                              const Instruction* instruction,
+                                              const MessageHeader* header,
+                                              StakeSetLockupInfo* info) {
     InstructionAccountsIterator it;
     instruction_accounts_iterator_init(&it, header, instruction);
 
@@ -250,12 +226,10 @@ static int parse_stake_set_lockup_instruction(
     return 0;
 }
 
-static int parse_stake_set_lockup_checked_instruction(
-    Parser* parser,
-    const Instruction* instruction,
-    const MessageHeader* header,
-    StakeSetLockupInfo* info
-) {
+static int parse_stake_set_lockup_checked_instruction(Parser* parser,
+                                                      const Instruction* instruction,
+                                                      const MessageHeader* header,
+                                                      StakeSetLockupInfo* info) {
     InstructionAccountsIterator it;
     instruction_accounts_iterator_init(&it, header, instruction);
 
@@ -271,12 +245,10 @@ static int parse_stake_set_lockup_checked_instruction(
     return 0;
 }
 
-static int parse_stake_split_instruction(
-    Parser* parser,
-    const Instruction* instruction,
-    const MessageHeader* header,
-    StakeSplitInfo* info
-) {
+static int parse_stake_split_instruction(Parser* parser,
+                                         const Instruction* instruction,
+                                         const MessageHeader* header,
+                                         StakeSplitInfo* info) {
     InstructionAccountsIterator it;
     instruction_accounts_iterator_init(&it, header, instruction);
 
@@ -289,11 +261,9 @@ static int parse_stake_split_instruction(
     return 0;
 }
 
-static int parse_stake_merge_instruction(
-    const Instruction* instruction,
-    const MessageHeader* header,
-    StakeMergeInfo* info
-) {
+static int parse_stake_merge_instruction(const Instruction* instruction,
+                                         const MessageHeader* header,
+                                         StakeMergeInfo* info) {
     InstructionAccountsIterator it;
     instruction_accounts_iterator_init(&it, header, instruction);
 
@@ -308,91 +278,57 @@ static int parse_stake_merge_instruction(
     return 0;
 }
 
-int parse_stake_instructions(
-    const Instruction* instruction,
-    const MessageHeader* header,
-    StakeInfo* info
-) {
+int parse_stake_instructions(const Instruction* instruction,
+                             const MessageHeader* header,
+                             StakeInfo* info) {
     Parser parser = {instruction->data, instruction->data_length};
 
     BAIL_IF(parse_stake_instruction_kind(&parser, &info->kind));
 
     switch (info->kind) {
         case StakeDelegate:
-            return parse_delegate_stake_instruction(
-                instruction,
-                header,
-                &info->delegate_stake
-            );
+            return parse_delegate_stake_instruction(instruction, header, &info->delegate_stake);
         case StakeInitialize:
-            return parse_stake_initialize_instruction(
-                &parser,
-                instruction,
-                header,
-                &info->initialize
-            );
+            return parse_stake_initialize_instruction(&parser,
+                                                      instruction,
+                                                      header,
+                                                      &info->initialize);
         case StakeInitializeChecked:
-            return parse_stake_initialize_checked_instruction(
-                &parser,
-                instruction,
-                header,
-                &info->initialize
-            );
+            return parse_stake_initialize_checked_instruction(&parser,
+                                                              instruction,
+                                                              header,
+                                                              &info->initialize);
         case StakeWithdraw:
-            return parse_stake_withdraw_instruction(
-                &parser,
-                instruction,
-                header,
-                &info->withdraw
-            );
+            return parse_stake_withdraw_instruction(&parser, instruction, header, &info->withdraw);
         case StakeAuthorize:
-            return parse_stake_authorize_instruction(
-                &parser,
-                instruction,
-                header,
-                &info->authorize
-            );
+            return parse_stake_authorize_instruction(&parser,
+                                                     instruction,
+                                                     header,
+                                                     &info->authorize);
         case StakeAuthorizeChecked:
-            return parse_stake_authorize_checked_instruction(
-                &parser,
-                instruction,
-                header,
-                &info->authorize
-            );
+            return parse_stake_authorize_checked_instruction(&parser,
+                                                             instruction,
+                                                             header,
+                                                             &info->authorize);
         case StakeDeactivate:
-            return parse_stake_deactivate_instruction(
-                &parser,
-                instruction,
-                header,
-                &info->deactivate
-            );
+            return parse_stake_deactivate_instruction(&parser,
+                                                      instruction,
+                                                      header,
+                                                      &info->deactivate);
         case StakeSetLockup:
-            return parse_stake_set_lockup_instruction(
-                &parser,
-                instruction,
-                header,
-                &info->set_lockup
-            );
+            return parse_stake_set_lockup_instruction(&parser,
+                                                      instruction,
+                                                      header,
+                                                      &info->set_lockup);
         case StakeSetLockupChecked:
-            return parse_stake_set_lockup_checked_instruction(
-                &parser,
-                instruction,
-                header,
-                &info->set_lockup
-            );
+            return parse_stake_set_lockup_checked_instruction(&parser,
+                                                              instruction,
+                                                              header,
+                                                              &info->set_lockup);
         case StakeSplit:
-            return parse_stake_split_instruction(
-                &parser,
-                instruction,
-                header,
-                &info->split
-            );
+            return parse_stake_split_instruction(&parser, instruction, header, &info->split);
         case StakeMerge:
-            return parse_stake_merge_instruction(
-                instruction,
-                header,
-                &info->merge
-            );
+            return parse_stake_merge_instruction(instruction, header, &info->merge);
         // Unsupported instructions
         case StakeAuthorizeWithSeed:
         case StakeAuthorizeCheckedWithSeed:
@@ -402,38 +338,29 @@ int parse_stake_instructions(
     return 1;
 }
 
-static int print_delegate_stake_info(
-    const StakeDelegateInfo* info,
-    const MessageHeader* header
-) {
+int print_delegate_stake_info(const char* primary_title,
+                              const StakeDelegateInfo* info,
+                              const PrintConfig* print_config) {
     SummaryItem* item;
 
-    item = transaction_summary_primary_item();
-    summary_item_set_pubkey(item, "Delegate from", info->stake_pubkey);
+    if (primary_title != NULL) {
+        item = transaction_summary_primary_item();
+        summary_item_set_pubkey(item, primary_title, info->stake_pubkey);
+    }
 
-    item = transaction_summary_general_item();
-    summary_item_set_pubkey(item, "Authorized by", info->authorized_pubkey);
+    if (print_config_show_authority(print_config, info->authorized_pubkey)) {
+        item = transaction_summary_general_item();
+        summary_item_set_pubkey(item, "Authorized by", info->authorized_pubkey);
+    }
 
     item = transaction_summary_general_item();
     summary_item_set_pubkey(item, "Vote account", info->vote_pubkey);
 
-    item = transaction_summary_fee_payer_item();
-    if (memcmp(
-            &header->pubkeys[0],
-            info->authorized_pubkey,
-            PUBKEY_SIZE
-        ) == 0
-    ) {
-        transaction_summary_set_fee_payer_string("authorizer");
-    }
-
     return 0;
 }
 
-static int print_stake_withdraw_info(
-    const StakeWithdrawInfo* info,
-    const MessageHeader* header
-) {
+static int print_stake_withdraw_info(const StakeWithdrawInfo* info,
+                                     const PrintConfig* print_config) {
     SummaryItem* item;
 
     item = transaction_summary_primary_item();
@@ -445,16 +372,16 @@ static int print_stake_withdraw_info(
     item = transaction_summary_general_item();
     summary_item_set_pubkey(item, "To", info->to);
 
-    item = transaction_summary_general_item();
-    summary_item_set_pubkey(item, "Authorized by", info->authority);
+    if (print_config_show_authority(print_config, info->authority)) {
+        item = transaction_summary_general_item();
+        summary_item_set_pubkey(item, "Authorized by", info->authority);
+    }
 
     return 0;
 }
 
-static int print_stake_authorize_info(
-    const StakeAuthorizeInfo* info,
-    const MessageHeader* header
-) {
+static int print_stake_authorize_info(const StakeAuthorizeInfo* info,
+                                      const PrintConfig* print_config) {
     const char* new_authority_title = NULL;
     SummaryItem* item;
 
@@ -473,36 +400,36 @@ static int print_stake_authorize_info(
     item = transaction_summary_general_item();
     summary_item_set_pubkey(item, new_authority_title, info->new_authority);
 
-    item = transaction_summary_general_item();
-    summary_item_set_pubkey(item, "Authorized by", info->authority);
+    if (print_config_show_authority(print_config, info->authority)) {
+        item = transaction_summary_general_item();
+        summary_item_set_pubkey(item, "Authorized by", info->authority);
+    }
 
-    if (info->custodian) {
-      item = transaction_summary_general_item();
-      summary_item_set_pubkey(item, "Custodian", info->custodian);
+    if (info->custodian && print_config_show_authority(print_config, info->custodian)) {
+        item = transaction_summary_general_item();
+        summary_item_set_pubkey(item, "Custodian", info->custodian);
     }
 
     return 0;
 }
 
-static int print_stake_deactivate_info(
-    const StakeDeactivateInfo* info,
-    const MessageHeader* header
-) {
+static int print_stake_deactivate_info(const StakeDeactivateInfo* info,
+                                       const PrintConfig* print_config) {
     SummaryItem* item;
 
     item = transaction_summary_primary_item();
     summary_item_set_pubkey(item, "Deactivate stake", info->account);
 
-    item = transaction_summary_general_item();
-    summary_item_set_pubkey(item, "Authorized by", info->authority);
+    if (print_config_show_authority(print_config, info->authority)) {
+        item = transaction_summary_general_item();
+        summary_item_set_pubkey(item, "Authorized by", info->authority);
+    }
 
     return 0;
 }
 
-static int print_stake_set_lockup_info(
-    const StakeSetLockupInfo* info,
-    const MessageHeader* header
-) {
+static int print_stake_set_lockup_info(const StakeSetLockupInfo* info,
+                                       const PrintConfig* print_config) {
     SummaryItem* item;
 
     item = transaction_summary_primary_item();
@@ -511,11 +438,7 @@ static int print_stake_set_lockup_info(
     enum StakeLockupPresent present = info->lockup.present;
     if (present & StakeLockupHasTimestamp) {
         item = transaction_summary_general_item();
-        summary_item_set_timestamp(
-            item,
-            "Time",
-            info->lockup.unix_timestamp
-        );
+        summary_item_set_timestamp(item, "Time", info->lockup.unix_timestamp);
     }
 
     if (present & StakeLockupHasEpoch) {
@@ -525,31 +448,23 @@ static int print_stake_set_lockup_info(
 
     if (present & StakeLockupHasCustodian) {
         item = transaction_summary_general_item();
-        summary_item_set_pubkey(
-            item,
-            "New authority",
-            info->lockup.custodian
-        );
+        summary_item_set_pubkey(item, "New authority", info->lockup.custodian);
     }
 
-    item = transaction_summary_general_item();
-    summary_item_set_pubkey(item, "Authorized by", info->custodian);
+    if (print_config_show_authority(print_config, info->custodian)) {
+        item = transaction_summary_general_item();
+        summary_item_set_pubkey(item, "Authorized by", info->custodian);
+    }
 
     return 0;
 }
 
-static int print_stake_split_info(
-    const StakeSplitInfo* info,
-    const MessageHeader* header
-) {
-    BAIL_IF(print_stake_split_info1(info, header));
-    return print_stake_split_info2(info, header);
+static int print_stake_split_info(const StakeSplitInfo* info, const PrintConfig* print_config) {
+    BAIL_IF(print_stake_split_info1(info, print_config));
+    return print_stake_split_info2(info, print_config);
 }
 
-static int print_stake_merge_info(
-    const StakeMergeInfo* info,
-    const MessageHeader* header
-) {
+static int print_stake_merge_info(const StakeMergeInfo* info, const PrintConfig* print_config) {
     SummaryItem* item;
 
     item = transaction_summary_primary_item();
@@ -558,40 +473,35 @@ static int print_stake_merge_info(
     item = transaction_summary_general_item();
     summary_item_set_pubkey(item, "Into", info->destination);
 
-    item = transaction_summary_general_item();
-    summary_item_set_pubkey(item, "Authorized by", info->authority);
+    if (print_config_show_authority(print_config, info->authority)) {
+        item = transaction_summary_general_item();
+        summary_item_set_pubkey(item, "Authorized by", info->authority);
+    }
 
     return 0;
 }
 
-int print_stake_info(
-    const StakeInfo* info,
-    const MessageHeader* header
-) {
+int print_stake_info(const StakeInfo* info, const PrintConfig* print_config) {
     switch (info->kind) {
         case StakeDelegate:
-            return print_delegate_stake_info(&info->delegate_stake, header);
+            return print_delegate_stake_info("Delegate from", &info->delegate_stake, print_config);
         case StakeInitialize:
         case StakeInitializeChecked:
-            return print_stake_initialize_info(
-                "Init stake acct",
-                &info->initialize,
-                header
-            );
+            return print_stake_initialize_info("Init stake acct", &info->initialize, print_config);
         case StakeWithdraw:
-            return print_stake_withdraw_info(&info->withdraw, header);
+            return print_stake_withdraw_info(&info->withdraw, print_config);
         case StakeAuthorize:
         case StakeAuthorizeChecked:
-            return print_stake_authorize_info(&info->authorize, header);
+            return print_stake_authorize_info(&info->authorize, print_config);
         case StakeDeactivate:
-            return print_stake_deactivate_info(&info->deactivate, header);
+            return print_stake_deactivate_info(&info->deactivate, print_config);
         case StakeSetLockup:
         case StakeSetLockupChecked:
-            return print_stake_set_lockup_info(&info->set_lockup, header);
+            return print_stake_set_lockup_info(&info->set_lockup, print_config);
         case StakeSplit:
-            return print_stake_split_info(&info->split, header);
+            return print_stake_split_info(&info->split, print_config);
         case StakeMerge:
-            return print_stake_merge_info(&info->merge, header);
+            return print_stake_merge_info(&info->merge, print_config);
         // Unsupported instructions
         case StakeAuthorizeWithSeed:
         case StakeAuthorizeCheckedWithSeed:
@@ -601,16 +511,11 @@ int print_stake_info(
     return 1;
 }
 
-int print_stake_initialize_info(
-    const char* primary_title,
-    const StakeInitializeInfo* info,
-    const MessageHeader* header
-) {
+int print_stake_initialize_info(const char* primary_title,
+                                const StakeInitializeInfo* info,
+                                const PrintConfig* print_config) {
     SummaryItem* item;
-    bool one_authority = pubkeys_equal(
-        info->withdraw_authority,
-        info->stake_authority
-    );
+    bool one_authority = pubkeys_equal(info->withdraw_authority, info->stake_authority);
 
     if (primary_title != NULL) {
         item = transaction_summary_primary_item();
@@ -625,11 +530,7 @@ int print_stake_initialize_info(
         summary_item_set_pubkey(item, "New stake auth", info->stake_authority);
 
         item = transaction_summary_general_item();
-        summary_item_set_pubkey(
-            item,
-            "New withdraw auth",
-            info->withdraw_authority
-        );
+        summary_item_set_pubkey(item, "New withdraw auth", info->withdraw_authority);
     }
 
     int64_t lockup_time = info->lockup.unix_timestamp;
@@ -637,11 +538,7 @@ int print_stake_initialize_info(
     if (lockup_time > 0 || lockup_epoch > 0) {
         if (lockup_time > 0) {
             item = transaction_summary_general_item();
-            summary_item_set_timestamp(
-                item,
-                "Lockup time",
-                lockup_time
-            );
+            summary_item_set_timestamp(item, "Lockup time", lockup_time);
         }
 
         if (lockup_epoch > 0) {
@@ -650,27 +547,18 @@ int print_stake_initialize_info(
         }
 
         item = transaction_summary_general_item();
-        summary_item_set_pubkey(
-            item,
-            "Lockup authority",
-            info->lockup.custodian
-        );
-    } else {
+        summary_item_set_pubkey(item, "Lockup authority", info->lockup.custodian);
+    } else if (print_config->expert_mode) {
         item = transaction_summary_general_item();
-        summary_item_set_string(
-            item,
-            "Lockup",
-            "None"
-        );
+        summary_item_set_string(item, "Lockup", "None");
     }
 
     return 0;
 }
 
-int print_stake_split_info1(
-    const StakeSplitInfo* info,
-    const MessageHeader* header
-) {
+int print_stake_split_info1(const StakeSplitInfo* info, const PrintConfig* print_config) {
+    UNUSED(print_config);
+
     SummaryItem* item;
 
     item = transaction_summary_primary_item();
@@ -685,14 +573,13 @@ int print_stake_split_info1(
     return 0;
 }
 
-int print_stake_split_info2(
-    const StakeSplitInfo* info,
-    const MessageHeader* header
-) {
-    SummaryItem* item;
+int print_stake_split_info2(const StakeSplitInfo* info, const PrintConfig* print_config) {
+    if (print_config_show_authority(print_config, info->authority)) {
+        SummaryItem* item;
 
-    item = transaction_summary_general_item();
-    summary_item_set_pubkey(item, "Authorized by", info->authority);
+        item = transaction_summary_general_item();
+        summary_item_set_pubkey(item, "Authorized by", info->authority);
+    }
 
     return 0;
 }
