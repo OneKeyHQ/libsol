@@ -503,10 +503,10 @@ int print_spl_token_transfer_info(const SplTokenTransferInfo* info,
                                   info->body.decimals);
 
     item = transaction_summary_general_item();
-    summary_item_set_pubkey(item, "From", info->src_account);
+    summary_item_set_pubkey(item, "Sender", info->src_account);
 
     item = transaction_summary_general_item();
-    summary_item_set_pubkey(item, "To", info->dest_account);
+    summary_item_set_pubkey(item, "Recipient", info->dest_account);
 
     print_spl_token_sign(&info->sign, print_config);
 

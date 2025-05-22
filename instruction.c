@@ -23,6 +23,8 @@ enum ProgramId instruction_program_id(const Instruction* instruction, const Mess
         return ProgramIdSerumAssertOwner;
     } else if (memcmp(program_id, &spl_memo_program_id, PUBKEY_SIZE) == 0) {
         return ProgramIdSplMemo;
+    } else if (memcmp(program_id, &compute_budget_program_id, PUBKEY_SIZE) == 0) {
+        return ProgramIdComputeBudget;
     }
 
     return ProgramIdUnknown;
@@ -45,6 +47,8 @@ bool instruction_info_matches_brief(const InstructionInfo* info, const Instructi
                 return true;
             case ProgramIdSplMemo:
                 return true;
+            case ProgramIdComputeBudget:
+                return (brief->compute_budget == info->compute_budget.kind);
             case ProgramIdSplToken:
                 return (brief->spl_token == info->spl_token.kind);
             case ProgramIdStake:

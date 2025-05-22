@@ -13,7 +13,9 @@
 #include <string.h>
 #include "memzero.h"
 
+#ifndef MAX_INSTRUCTIONS
 #define MAX_INSTRUCTIONS 4
+#endif
 
 int process_message_body(const uint8_t* message_body,
                          int message_body_length,
@@ -54,7 +56,7 @@ int process_message_body(const uint8_t* message_body,
                 break;
             }
             case ProgramIdSplMemo: {
-                // SPL Memo only has one instruction and we ignore it for now
+                // SPL Memo only has one instruction, and we ignore it for now
                 info->kind = program_id;
                 break;
             }
@@ -81,6 +83,14 @@ int process_message_body(const uint8_t* message_body,
                 }
                 break;
             }
+            case ProgramIdComputeBudget: {
+                if (parse_compute_budget_instructions(&instruction,
+                                                      header,
+                                                      &info->compute_budget) == 0) {
+                    info->kind = program_id;
+                }
+                break;
+            }
             case ProgramIdUnknown:
                 break;
         }
@@ -90,6 +100,7 @@ int process_message_body(const uint8_t* message_body,
             case ProgramIdSystem:
             case ProgramIdStake:
             case ProgramIdVote:
+            case ProgramIdComputeBudget:
             case ProgramIdUnknown:
                 display_instruction_info[display_instruction_count++] = info;
                 break;
