@@ -9,6 +9,11 @@ struct token_info {
 
 const struct token_info token_infos[] = {
     {&spl_token_program_id, "WSOL"},
+    {&spl_token_usdt_mint_address, "USDT"},
+    {&spl_token_usdc_mint_address, "USDC"},
+    {&spl_token_jup_mint_address, "JUP"},
+    {&spl_token_ray_mint_address, "RAY"},
+    {&spl_token_bonk_mint_address, "BONK"},
 };
 
 const char* get_token_symbol(const Pubkey* mint_address) {
