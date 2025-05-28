@@ -33,6 +33,11 @@ typedef struct {
 } SplTokenSign;
 
 extern const Pubkey spl_token_program_id;
+extern const Pubkey spl_token_usdt_mint_address;
+extern const Pubkey spl_token_usdc_mint_address;
+extern const Pubkey spl_token_jup_mint_address;
+extern const Pubkey spl_token_ray_mint_address;
+extern const Pubkey spl_token_bonk_mint_address;
 
 typedef struct SplTokenInitializeMintInfo {
     const Pubkey* mint_account;

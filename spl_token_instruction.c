@@ -7,6 +7,11 @@
 #include "util.h"
 
 const Pubkey spl_token_program_id = {{PROGRAM_ID_SPL_TOKEN}};
+const Pubkey spl_token_usdt_mint_address = {{TOKEN_MINT_ADDRESS_USDT}};
+const Pubkey spl_token_usdc_mint_address = {{TOKEN_MINT_ADDRESS_USDC}};
+const Pubkey spl_token_jup_mint_address = {{TOKEN_MINT_ADDRESS_JUP}};
+const Pubkey spl_token_ray_mint_address = {{TOKEN_MINT_ADDRESS_RAY}};
+const Pubkey spl_token_bonk_mint_address = {{TOKEN_MINT_ADDRESS_BONK}};
 
 static int parse_spl_token_instruction_kind(Parser* parser, SplTokenInstructionKind* kind) {
     uint8_t maybe_kind;
@@ -503,10 +508,10 @@ int print_spl_token_transfer_info(const SplTokenTransferInfo* info,
                                   info->body.decimals);
 
     item = transaction_summary_general_item();
-    summary_item_set_pubkey(item, "From", info->src_account);
+    summary_item_set_pubkey(item, "Sender", info->src_account);
 
     item = transaction_summary_general_item();
-    summary_item_set_pubkey(item, "To", info->dest_account);
+    summary_item_set_pubkey(item, "Recipient", info->dest_account);
 
     print_spl_token_sign(&info->sign, print_config);
 
