@@ -30,7 +30,9 @@ else
 all: libsol.a
 endif
 CFLAGS += -Werror -Wall -Wextra -pedantic -Wshadow -Wcast-qual -Wcast-align -Wno-unused-parameter -Wno-gnu-folding-constant
+ifeq ($(EMULATOR),1)
 CFLAGS += -Wno-newline-eof -Wno-strict-prototypes
+endif
 CFLAGS += -Iinclude
 CFLAGS += $($(mode)_CFLAGS)
 CFLAGS += -ffunction-sections -fdata-sections $(CPUFLAGS) $(FPUFLAGS) 
