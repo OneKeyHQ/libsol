@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-void test_summary_item_setters() {
+void test_summary_item_setters(void) {
     SummaryItem item;
 
     summary_item_set_amount(&item, "amount", 42);
@@ -65,7 +65,7 @@ void test_summary_item_setters() {
     assert(item.i64 == 42);
 }
 
-void test_summary_item_as_unused() {
+void test_summary_item_as_unused(void) {
     SummaryItem item;
 
     item.kind = SummaryItemNone;
@@ -99,7 +99,7 @@ void test_summary_item_as_unused() {
     assert(summary_item_as_unused(&item) == NULL);
 }
 
-void test_transaction_summary_reset() {
+void test_transaction_summary_reset(void) {
     memset(&G_transaction_summary, 1, sizeof(TransactionSummary));
     memset(G_transaction_summary_title, 1, TITLE_SIZE);
     memset(G_transaction_summary_text, 1, TEXT_BUFFER_LENGTH);
@@ -129,7 +129,7 @@ void test_transaction_summary_reset() {
     }
 }
 
-void test_transaction_summary_item_getters() {
+void test_transaction_summary_item_getters(void) {
     SummaryItem* item;
 
     assert((item = transaction_summary_primary_item()) != NULL);
@@ -161,7 +161,7 @@ void test_transaction_summary_item_getters() {
         assert_string_equal(G_transaction_summary_text, text);      \
     } while (0)
 
-void test_transaction_summary_update_display_for_item() {
+void test_transaction_summary_update_display_for_item(void) {
     SummaryItem item;
 
     item.kind = SummaryItemNone;
@@ -245,7 +245,7 @@ void test_transaction_summary_update_display_for_item() {
         assert_transaction_summary_display(title, "42");            \
     } while (0)
 
-void test_transaction_summary_display_item() {
+void test_transaction_summary_display_item(void) {
     transaction_summary_reset();
 
     display_item_test_helper(primary, 0);
@@ -275,7 +275,7 @@ void test_transaction_summary_display_item() {
         }                                                               \
     } while (0)
 
-void test_transaction_summary_finalize() {
+void test_transaction_summary_finalize(void) {
     enum SummaryItemKind kinds[MAX_TRANSACTION_SUMMARY_ITEMS];
     size_t num_kinds;
     SummaryItem* item;
@@ -345,7 +345,7 @@ void test_transaction_summary_finalize() {
     assert_kinds_array(kinds, num_kinds);
 }
 
-void test_repro_unrecognized_format_reverse_nav_hash_corruption_bug() {
+void test_repro_unrecognized_format_reverse_nav_hash_corruption_bug(void) {
     SummaryItem* item;
     const char* primary_title = "Unrecognized";
     const char* primary_text = "format";
@@ -392,7 +392,7 @@ void test_repro_unrecognized_format_reverse_nav_hash_corruption_bug() {
     assert_transaction_summary_display(primary_title, primary_text);
 }
 
-int main() {
+int main(void) {
     test_summary_item_setters();
     test_summary_item_as_unused();
 

@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-void test_parse_system_transfer_instructions() {
+void test_parse_system_transfer_instructions(void) {
     uint8_t message[] = {1,   0,   1,   3,   171, 88,  202, 32,  185, 160, 182, 116, 130, 185, 73,
                          48,  13,  216, 170, 71,  172, 195, 165, 123, 87,  70,  130, 219, 5,   157,
                          240, 187, 26,  191, 158, 218, 204, 241, 115, 109, 41,  173, 110, 48,  24,
@@ -32,7 +32,7 @@ void test_parse_system_transfer_instructions() {
     assert(memcmp(fee_payer_pubkey, info.transfer.from, PUBKEY_SIZE) == 0);
 }
 
-void test_parse_system_transfer_instructions_with_payer() {
+void test_parse_system_transfer_instructions_with_payer(void) {
     uint8_t message[] = {2,   0,   1,   3,   204, 241, 115, 109, 41,  173, 110, 48,  24,  113, 210,
                          213, 163, 78,  1,   112, 146, 114, 235, 220, 96,  185, 184, 85,  163, 27,
                          124, 48,  54,  250, 233, 54,  171, 88,  202, 32,  185, 160, 182, 116, 130,
@@ -59,7 +59,7 @@ void test_parse_system_transfer_instructions_with_payer() {
     assert(memcmp(fee_payer_pubkey, info.transfer.to, PUBKEY_SIZE) == 0);
 }
 
-void test_parse_system_advance_nonce_account_instruction() {
+void test_parse_system_advance_nonce_account_instruction(void) {
     uint8_t message[] = {
         1,   1,   2,  4,   18,  67,  85,  168, 124, 173, 88,  142, 77,  171, 80,  178, 8,   218,
         230, 68,  85, 231, 39,  54,  184, 42,  162, 85,  172, 139, 54,  173, 194, 7,   64,  250,
@@ -116,7 +116,7 @@ void test_parse_system_advance_nonce_account_instruction() {
     assert(num_kinds == 3);
 }
 
-void test_system_create_account_with_seed_instruction() {
+void test_system_create_account_with_seed_instruction(void) {
 #define FROM_PUBKEY BYTES32_BS58_2
 #define TO_PUBKEY   BYTES32_BS58_3
 #define BASE_PUBKEY BYTES32_BS58_4
@@ -205,7 +205,7 @@ void test_system_create_account_with_seed_instruction() {
     assert(parse_system_instructions(&instruction, &header, &info) == 0);
 }
 
-void test_process_system_transfer() {
+void test_process_system_transfer(void) {
     uint8_t message[] = {1,   0,   1,   3,   171, 88,  202, 32,  185, 160, 182, 116, 130, 185, 73,
                          48,  13,  216, 170, 71,  172, 195, 165, 123, 87,  70,  130, 219, 5,   157,
                          240, 187, 26,  191, 158, 218, 204, 241, 115, 109, 41,  173, 110, 48,  24,
@@ -241,7 +241,7 @@ void test_process_system_transfer() {
     assert_string_equal(G_transaction_summary_text, "0.000000042 SOL");
 }
 
-void test_parse_system_instruction_kind() {
+void test_parse_system_instruction_kind(void) {
     enum SystemInstructionKind kind;
     uint8_t buf[] = {0, 0, 0, 0};
     Parser parser = {buf, ARRAY_LEN(buf)};
@@ -324,7 +324,7 @@ void test_parse_system_instruction_kind() {
     assert(parse_system_instruction_kind(&parser, &kind) == 1);
 }
 
-int main() {
+int main(void) {
     test_parse_system_transfer_instructions();
     test_parse_system_transfer_instructions_with_payer();
     test_parse_system_advance_nonce_account_instruction();

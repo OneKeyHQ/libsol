@@ -2,7 +2,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-void test_print_amount() {
+void test_print_amount(void) {
     char printed[24];
 
     print_amount(0, printed, sizeof(printed));
@@ -19,7 +19,7 @@ void test_print_amount() {
     assert_string_equal(printed, "10000000.1 SOL");
 }
 
-void test_print_token_amount() {
+void test_print_token_amount(void) {
     char printed[26];
 
     print_token_amount(0, "TST", 0, printed, sizeof(printed));
@@ -46,7 +46,7 @@ void test_print_token_amount() {
     assert_string_equal(printed, "18446744073709551615 TST");
 }
 
-void test_print_sized_string() {
+void test_print_sized_string(void) {
     char buf[5];
     const char test[] = {0x74, 0x65, 0x73, 0x74};
     SizedString string = {sizeof(test), test};
@@ -64,7 +64,7 @@ void test_print_sized_string() {
     assert_string_equal(buf, "");
 }
 
-void test_print_string() {
+void test_print_string(void) {
     char buf[5];
 
     assert(print_string("fits", buf, sizeof(buf)) == 0);
@@ -77,7 +77,7 @@ void test_print_string() {
     assert_string_equal("", buf);
 }
 
-void test_print_summary() {
+void test_print_summary(void) {
     char summary[27];
     assert(print_summary("GADFVW3UXVKDOU626XUPYDJU2BFCGFJHQ6SREYOZ6IJV4XSHOALEQN2I",
                          summary,
@@ -99,7 +99,7 @@ void test_print_summary() {
     assert(print_summary("buffer too small", NULL, 0, 12, 12) == 1);
 }
 
-void test_print_i64() {
+void test_print_i64(void) {
     char buf[21];
     assert(print_i64(INT64_MIN, buf, sizeof(buf)) == 0);
     assert_string_equal(buf, "-9223372036854775808");
@@ -111,7 +111,7 @@ void test_print_i64() {
     assert_string_equal(buf, "-1");
 }
 
-void test_print_u64() {
+void test_print_u64(void) {
 #define U64_MAX_STR (20 + 1)  // strlen("18446744073709551615") + NUL
     char out[U64_MAX_STR];
 
@@ -124,7 +124,7 @@ void test_print_u64() {
     assert(print_u64(0, NULL, 0) == 1);
 }
 
-void test_print_timestamp() {
+void test_print_timestamp(void) {
 #define RFC3339_MAX (4 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1)
     char out[RFC3339_MAX];
     int64_t unix_epoch = 0;
@@ -142,7 +142,7 @@ void test_print_timestamp() {
     assert(print_timestamp(0, out, sizeof(out) - 1) == 1);
 }
 
-int main() {
+int main(void) {
     test_print_amount();
     test_print_token_amount();
     test_print_sized_string();

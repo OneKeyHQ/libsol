@@ -22,7 +22,7 @@ void print_pubkey(const Pubkey* pubkey) {
 #define DELEGATE         DEST_ACCOUNT
 #define NEW_OWNER        DEST_ACCOUNT
 
-void test_parse_spl_token_create_token() {
+void test_parse_spl_token_create_token(void) {
     uint8_t message[] = {2,
                          0,
                          3,
@@ -99,7 +99,7 @@ void test_parse_spl_token_create_token() {
     assert(init_mint->freeze_authority == NULL);
 }
 
-void test_parse_spl_token_create_account() {
+void test_parse_spl_token_create_account(void) {
     uint8_t message[] = {
         0x02,
         0x00,
@@ -178,7 +178,7 @@ void test_parse_spl_token_create_account() {
     assert_pubkey_equal(init_acc->owner, &owner);
 }
 
-void test_parse_spl_token_create_account2() {
+void test_parse_spl_token_create_account2(void) {
     uint8_t message[] = {0x02,
                          0x00,
                          0x04,
@@ -255,7 +255,7 @@ void test_parse_spl_token_create_account2() {
     assert_pubkey_equal(init_acc->owner, &owner);
 }
 
-void test_parse_spl_token_create_multisig() {
+void test_parse_spl_token_create_multisig(void) {
     uint8_t message[] = {2,
                          0,
                          5,
@@ -340,7 +340,7 @@ void test_parse_spl_token_create_multisig() {
     assert_pubkey_equal(signer++, &signer3);
 }
 
-void test_parse_spl_token_transfer() {
+void test_parse_spl_token_transfer(void) {
     uint8_t message[] = {1,
                          0,
                          2,
@@ -400,7 +400,7 @@ void test_parse_spl_token_transfer() {
     assert_pubkey_equal(tr_info->mint_account, &mint_account);
 }
 
-void test_parse_spl_token_approve() {
+void test_parse_spl_token_approve(void) {
     uint8_t message[] = {1,
                          0,
                          2,
@@ -459,7 +459,7 @@ void test_parse_spl_token_approve() {
     assert_pubkey_equal(ap_info->mint_account, &mint_account);
 }
 
-void test_parse_spl_token_revoke() {
+void test_parse_spl_token_revoke(void) {
     uint8_t message[] = {1,
                          0,
                          2,
@@ -497,7 +497,7 @@ void test_parse_spl_token_revoke() {
     assert_pubkey_equal(re_info->sign.single.signer, &owner);
 }
 
-void test_parse_spl_token_set_authority() {
+void test_parse_spl_token_set_authority(void) {
     uint8_t message[] = {1,
                          0,
                          1,
@@ -543,7 +543,7 @@ void test_parse_spl_token_set_authority() {
     assert_pubkey_equal(so_info->sign.single.signer, &owner);
 }
 
-void test_parse_spl_token_mint_to() {
+void test_parse_spl_token_mint_to(void) {
     uint8_t message[] = {1,
                          0,
                          0,
@@ -597,7 +597,7 @@ void test_parse_spl_token_mint_to() {
     assert_pubkey_equal(mt_info->sign.single.signer, &owner);
 }
 
-void test_parse_spl_token_burn() {
+void test_parse_spl_token_burn(void) {
     uint8_t message[] = {1,
                          0,
                          0,
@@ -652,7 +652,7 @@ void test_parse_spl_token_burn() {
     assert_pubkey_equal(bn_info->mint_account, &mint_account);
 }
 
-void test_parse_spl_token_close_account() {
+void test_parse_spl_token_close_account(void) {
     uint8_t message[] = {
         0x01,
         0x00,
@@ -696,7 +696,7 @@ void test_parse_spl_token_close_account() {
     assert_pubkey_equal(close_acc->sign.single.signer, &owner);
 }
 
-void test_parse_spl_token_freeze_account() {
+void test_parse_spl_token_freeze_account(void) {
     uint8_t message[] = {1,
                          0,
                          2,
@@ -739,7 +739,7 @@ void test_parse_spl_token_freeze_account() {
     assert_pubkey_equal(freeze_account->sign.single.signer, &owner);
 }
 
-void test_parse_spl_token_thaw_account() {
+void test_parse_spl_token_thaw_account(void) {
     uint8_t message[] = {1,
                          0,
                          2,
@@ -782,7 +782,7 @@ void test_parse_spl_token_thaw_account() {
     assert_pubkey_equal(thaw_account->sign.single.signer, &owner);
 }
 
-void test_parse_spl_token_sync_native() {
+void test_parse_spl_token_sync_native(void) {
     uint8_t message[] = {1,
                          0,
                          1,
@@ -816,7 +816,7 @@ void test_parse_spl_token_sync_native() {
     assert_pubkey_equal(sync_native->token_account, &token_account);
 }
 
-void test_parse_spl_token_instruction_kind() {
+void test_parse_spl_token_instruction_kind(void) {
     SplTokenInstructionKind kind;
 
     uint8_t buf[] = {0};
@@ -936,7 +936,7 @@ void test_parse_spl_token_instruction_kind() {
     assert(parse_spl_token_instruction_kind(&parser, &kind) == 1);
 }
 
-void test_parse_spl_token_sign() {
+void test_parse_spl_token_sign(void) {
     const size_t max_signers = Token_MAX_SIGNERS;
     const size_t max_accounts = 1 + max_signers;   // multisig_account + signers
     const size_t accounts_len = max_accounts + 1;  // one too many
@@ -985,7 +985,7 @@ void test_parse_spl_token_sign() {
     assert(sign.multi.signers.count == max_signers);
 }
 
-void test_print_m_of_n_string() {
+void test_print_m_of_n_string(void) {
     char s[M_OF_N_MAX_LEN];
 
     // n too big fails
@@ -1005,7 +1005,7 @@ void test_print_m_of_n_string() {
     assert_string_equal(s, "11 of 11");
 }
 
-int main() {
+int main(void) {
     test_print_m_of_n_string();
     test_parse_spl_token_sign();
     test_parse_spl_token_instruction_kind();

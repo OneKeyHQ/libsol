@@ -92,7 +92,7 @@ static TransactionSummary G_transaction_summary;
 char G_transaction_summary_title[TITLE_SIZE];
 char G_transaction_summary_text[TEXT_BUFFER_LENGTH];
 
-void transaction_summary_reset() {
+void transaction_summary_reset(void) {
     memzero(&G_transaction_summary, sizeof(TransactionSummary));
     memzero(&G_transaction_summary_title, TITLE_SIZE);
     memzero(&G_transaction_summary_text, TEXT_BUFFER_LENGTH);
@@ -109,27 +109,27 @@ static SummaryItem* summary_item_as_unused(SummaryItem* item) {
     return NULL;
 }
 
-SummaryItem* transaction_summary_primary_item() {
+SummaryItem* transaction_summary_primary_item(void) {
     SummaryItem* item = &G_transaction_summary.primary;
     return summary_item_as_unused(item);
 }
 
-SummaryItem* transaction_summary_fee_payer_item() {
+SummaryItem* transaction_summary_fee_payer_item(void) {
     SummaryItem* item = &G_transaction_summary.fee_payer;
     return summary_item_as_unused(item);
 }
 
-SummaryItem* transaction_summary_nonce_account_item() {
+SummaryItem* transaction_summary_nonce_account_item(void) {
     SummaryItem* item = &G_transaction_summary.nonce_account;
     return summary_item_as_unused(item);
 }
 
-SummaryItem* transaction_summary_nonce_authority_item() {
+SummaryItem* transaction_summary_nonce_authority_item(void) {
     SummaryItem* item = &G_transaction_summary.nonce_authority;
     return summary_item_as_unused(item);
 }
 
-SummaryItem* transaction_summary_general_item() {
+SummaryItem* transaction_summary_general_item(void) {
     for (size_t i = 0; i < NUM_GENERAL_ITEMS; i++) {
         SummaryItem* item = &G_transaction_summary.general[i];
         if (!is_summary_item_used(item)) {

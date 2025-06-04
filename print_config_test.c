@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-void test_print_config_show_authority() {
+void test_print_config_show_authority(void) {
     Pubkey signer = {{BYTES32_BS58_1}};
     Pubkey not_signer = {{BYTES32_BS58_2}};
     PrintConfig print_config = {.expert_mode = false, .signer_pubkey = &signer};
@@ -15,7 +15,7 @@ void test_print_config_show_authority() {
     assert(print_config_show_authority(&print_config, &not_signer));
 }
 
-int main() {
+int main(void) {
     test_print_config_show_authority();
 
     printf("passed\n");

@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void test_instruction_program_id_system() {
+void test_instruction_program_id_system(void) {
     Pubkey program_id;
     memcpy(&program_id, &system_program_id, PUBKEY_SIZE);
     Instruction instruction = {0, NULL, 0, NULL, 0};
@@ -22,7 +22,7 @@ void test_instruction_program_id_system() {
     }
 }
 
-void test_instruction_program_id_stake() {
+void test_instruction_program_id_stake(void) {
     Pubkey program_id;
     memcpy(&program_id, &stake_program_id, PUBKEY_SIZE);
     Instruction instruction = {0, NULL, 0, NULL, 0};
@@ -36,7 +36,7 @@ void test_instruction_program_id_stake() {
     }
 }
 
-void test_instruction_program_id_unknown() {
+void test_instruction_program_id_unknown(void) {
     Pubkey program_id = {{BYTES32_BS58_2}};
     Instruction instruction = {0, NULL, 0, NULL, 0};
     {
@@ -49,7 +49,7 @@ void test_instruction_program_id_unknown() {
     }
 }
 
-void test_instruction_validate_ok() {
+void test_instruction_validate_ok(void) {
     uint8_t accounts[] = {1, 2, 3};
     Instruction instruction = {0, accounts, 3, NULL, 0};
     {
@@ -62,7 +62,7 @@ void test_instruction_validate_ok() {
     }
 }
 
-void test_instruction_validate_bad_program_id_index_fail() {
+void test_instruction_validate_bad_program_id_index_fail(void) {
     uint8_t accounts[] = {1, 2, 3};
     Instruction instruction = {4, accounts, 3, NULL, 0};
     {
@@ -75,7 +75,7 @@ void test_instruction_validate_bad_program_id_index_fail() {
     }
 }
 
-void test_instruction_validate_bad_first_account_index_fail() {
+void test_instruction_validate_bad_first_account_index_fail(void) {
     uint8_t accounts[] = {4, 2, 3};
     Instruction instruction = {0, accounts, 3, NULL, 0};
     {
@@ -88,7 +88,7 @@ void test_instruction_validate_bad_first_account_index_fail() {
     }
 }
 
-void test_instruction_validate_bad_last_account_index_fail() {
+void test_instruction_validate_bad_last_account_index_fail(void) {
     uint8_t accounts[] = {1, 2, 4};
     Instruction instruction = {0, accounts, 3, NULL, 0};
     {
@@ -101,7 +101,7 @@ void test_instruction_validate_bad_last_account_index_fail() {
     }
 }
 
-void test_static_brief_initializer_macros() {
+void test_static_brief_initializer_macros(void) {
     InstructionBrief system_test = SYSTEM_IX_BRIEF(SystemTransfer);
     InstructionBrief system_expect = {ProgramIdSystem, .system = SystemTransfer};
     assert(memcmp(&system_test, &system_expect, sizeof(InstructionBrief)) == 0);
@@ -110,7 +110,7 @@ void test_static_brief_initializer_macros() {
     assert(memcmp(&stake_test, &stake_expect, sizeof(InstructionBrief)) == 0);
 }
 
-void test_instruction_info_matches_brief() {
+void test_instruction_info_matches_brief(void) {
     InstructionInfo info = {
         .kind = ProgramIdSystem,
         .system =
@@ -125,7 +125,7 @@ void test_instruction_info_matches_brief() {
     assert(!instruction_info_matches_brief(&info, &brief_fail));
 }
 
-void test_instruction_infos_match_briefs() {
+void test_instruction_infos_match_briefs(void) {
     InstructionInfo infos[] = {{
                                    .kind = ProgramIdSystem,
                                    .system =
@@ -159,7 +159,7 @@ void test_instruction_infos_match_briefs() {
     assert(!instruction_infos_match_briefs(display_infos, bad_briefs, infos_len));
 }
 
-void test_instruction_accounts_iterator_next() {
+void test_instruction_accounts_iterator_next(void) {
     uint8_t instruction_accounts[] = {0, 1, 2};
     Instruction instruction = {
         2,
@@ -206,7 +206,7 @@ void test_instruction_accounts_iterator_next() {
     assert(instruction_accounts_iterator_remaining(&it) == expected_remaining);
 }
 
-int main() {
+int main(void) {
     test_instruction_validate_ok();
     test_instruction_validate_bad_program_id_index_fail();
     test_instruction_validate_bad_first_account_index_fail();

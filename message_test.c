@@ -9,7 +9,7 @@
 // Disable clang format for this file to keep clear buffer formatting
 /* clang-format off */
 
-void test_process_message_body_ok() {
+void test_process_message_body_ok(void) {
     Pubkey accounts[] = {
         {{171, 88, 202, 32, 185, 160, 182, 116, 130, 185, 73, 48, 13, 216, 170, 71, 172, 195, 165, 123, 87, 70, 130, 219, 5, 157, 240, 187, 26, 191, 158, 218}},
         {{204, 241, 115, 109, 41, 173, 110, 48, 24, 113, 210, 213, 163, 78, 1, 112, 146, 114, 235, 220, 96, 185, 184, 85, 163, 27, 124, 48, 54, 250, 233, 54}},
@@ -28,7 +28,7 @@ void test_process_message_body_ok() {
     assert(num_kinds == 4);
 }
 
-void test_process_message_body_xfer_w_nonce_ok() {
+void test_process_message_body_xfer_w_nonce_ok(void) {
     Pubkey accounts[] = {
         {{171, 88, 202, 32, 185, 160, 182, 116, 130, 185, 73, 48, 13, 216, 170, 71, 172, 195, 165, 123, 87, 70, 130, 219, 5, 157, 240, 187, 26, 191, 158, 218}},
         {{204, 241, 115, 109, 41, 173, 110, 48, 24, 113, 210, 213, 163, 78, 1, 112, 146, 114, 235, 220, 96, 185, 184, 85, 163, 27, 124, 48, 54, 250, 233, 54}},
@@ -49,12 +49,12 @@ void test_process_message_body_xfer_w_nonce_ok() {
     assert(num_kinds == 6);
 }
 
-void test_process_message_body_too_few_ix_fail() {
+void test_process_message_body_too_few_ix_fail(void) {
     PrintConfig print_config = { .header = {false, 0, {0, 0, 0, 0}, NULL, NULL, 0}, .expert_mode = true };
     assert(process_message_body(NULL, 0, &print_config) == 1);
 }
 
-void test_process_message_body_too_many_ix_fail() {
+void test_process_message_body_too_many_ix_fail(void) {
     Pubkey accounts[] = {
         {{171, 88, 202, 32, 185, 160, 182, 116, 130, 185, 73, 48, 13, 216, 170, 71, 172, 195, 165, 123, 87, 70, 130, 219, 5, 157, 240, 187, 26, 191, 158, 218}},
         {{204, 241, 115, 109, 41, 173, 110, 48, 24, 113, 210, 213, 163, 78, 1, 112, 146, 114, 235, 220, 96, 185, 184, 85, 163, 27, 124, 48, 54, 250, 233, 54}},
@@ -75,12 +75,12 @@ void test_process_message_body_too_many_ix_fail() {
     assert(process_message_body(msg_body, ARRAY_LEN(msg_body), &print_config) == 1);
 }
 
-void test_process_message_body_data_too_short_fail() {
+void test_process_message_body_data_too_short_fail(void) {
     PrintConfig print_config = { .header = {false, 0, {0, 0, 0, 0}, NULL, NULL, 1}, .expert_mode = true };
     assert(process_message_body(NULL, 0, &print_config) == 1);
 }
 
-void test_process_message_body_data_too_long_fail() {
+void test_process_message_body_data_too_long_fail(void) {
     Pubkey accounts[] = {
         {{171, 88, 202, 32, 185, 160, 182, 116, 130, 185, 73, 48, 13, 216, 170, 71, 172, 195, 165, 123, 87, 70, 130, 219, 5, 157, 240, 187, 26, 191, 158, 218}},
         {{204, 241, 115, 109, 41, 173, 110, 48, 24, 113, 210, 213, 163, 78, 1, 112, 146, 114, 235, 220, 96, 185, 184, 85, 163, 27, 124, 48, 54, 250, 233, 54}},
@@ -95,13 +95,13 @@ void test_process_message_body_data_too_long_fail() {
     assert(process_message_body(msg_body, ARRAY_LEN(msg_body), &print_config) == 1);
 }
 
-void test_process_message_body_bad_ix_account_index_fail() {
+void test_process_message_body_bad_ix_account_index_fail(void) {
     PrintConfig print_config = { .header = {false, 0, {0, 0, 0, 1}, NULL, NULL, 1}, .expert_mode = true };
     uint8_t msg_body[] = {1, 0, 0};
     assert(process_message_body(msg_body, ARRAY_LEN(msg_body), &print_config) == 1);
 }
 
-void test_process_message_body_unknown_ix_enum_fail() {
+void test_process_message_body_unknown_ix_enum_fail(void) {
     Pubkey accounts[] = {
         {{171, 88, 202, 32, 185, 160, 182, 116, 130, 185, 73, 48, 13, 216, 170, 71, 172, 195, 165, 123, 87, 70, 130, 219, 5, 157, 240, 187, 26, 191, 158, 218}},
         {{204, 241, 115, 109, 41, 173, 110, 48, 24, 113, 210, 213, 163, 78, 1, 112, 146, 114, 235, 220, 96, 185, 184, 85, 163, 27, 124, 48, 54, 250, 233, 54}},
@@ -115,7 +115,7 @@ void test_process_message_body_unknown_ix_enum_fail() {
     assert(process_message_body(msg_body, ARRAY_LEN(msg_body), &print_config) == 1);
 }
 
-void test_process_message_body_ix_with_unknown_program_id_fail() {
+void test_process_message_body_ix_with_unknown_program_id_fail(void) {
     Pubkey accounts[] = {
         {{171, 88, 202, 32, 185, 160, 182, 116, 130, 185, 73, 48, 13, 216, 170, 71, 172, 195, 165, 123, 87, 70, 130, 219, 5, 157, 240, 187, 26, 191, 158, 218}},
         {{204, 241, 115, 109, 41, 173, 110, 48, 24, 113, 210, 213, 163, 78, 1, 112, 146, 114, 235, 220, 96, 185, 184, 85, 163, 27, 124, 48, 54, 250, 233, 54}},
@@ -147,7 +147,7 @@ static void process_message_body_and_sanity_check(const uint8_t* message, size_t
     }
 }
 
-void test_process_message_body_nonced_stake_create_with_seed() {
+void test_process_message_body_nonced_stake_create_with_seed(void) {
     uint8_t message[] = {
         2, 1, 4,
         8,
@@ -195,7 +195,7 @@ void test_process_message_body_nonced_stake_create_with_seed() {
     process_message_body_and_sanity_check(message, sizeof(message), 13);
 }
 
-void test_process_message_body_create_stake_account() {
+void test_process_message_body_create_stake_account(void) {
     uint8_t message[] = {
         2, 0, 3,
         5,
@@ -231,7 +231,7 @@ void test_process_message_body_create_stake_account() {
     process_message_body_and_sanity_check(message, sizeof(message), 9);
 }
 
-void test_process_message_body_create_stake_account_no_lockup() {
+void test_process_message_body_create_stake_account_no_lockup(void) {
     uint8_t message[] = {
         2, 0, 3,
         5,
@@ -267,7 +267,7 @@ void test_process_message_body_create_stake_account_no_lockup() {
     process_message_body_and_sanity_check(message, sizeof(message), 7);
 }
 
-void test_process_message_body_nonced_stake_create_with_seed_checked() {
+void test_process_message_body_nonced_stake_create_with_seed_checked(void) {
     uint8_t message[] = {
         3, 2, 5,
         10,
@@ -312,7 +312,7 @@ void test_process_message_body_nonced_stake_create_with_seed_checked() {
     process_message_body_and_sanity_check(message, sizeof(message), 11);
 }
 
-void test_process_message_body_create_stake_account_checked() {
+void test_process_message_body_create_stake_account_checked(void) {
     uint8_t message[] = {
         3, 1, 4,
         7,
@@ -345,7 +345,7 @@ void test_process_message_body_create_stake_account_checked() {
     process_message_body_and_sanity_check(message, sizeof(message), 7); // no lockup
 }
 
-void test_process_message_body_create_nonce_account() {
+void test_process_message_body_create_nonce_account(void) {
     uint8_t message[] = {
         2, 0, 3,
         5,
@@ -377,7 +377,7 @@ void test_process_message_body_create_nonce_account() {
     process_message_body_and_sanity_check(message, sizeof(message), 5);
 }
 
-void test_process_message_body_create_nonce_account_with_seed() {
+void test_process_message_body_create_nonce_account_with_seed(void) {
     uint8_t message[] = {
         1, 0, 3,
         5,
@@ -412,7 +412,7 @@ void test_process_message_body_create_nonce_account_with_seed() {
     process_message_body_and_sanity_check(message, sizeof(message), 7);
 }
 
-void test_process_message_body_create_vote_account() {
+void test_process_message_body_create_vote_account(void) {
     uint8_t message[] = {
         2, 0, 4,
         6,
@@ -448,7 +448,7 @@ void test_process_message_body_create_vote_account() {
     process_message_body_and_sanity_check(message, sizeof(message), 8);
 }
 
-void test_process_message_body_create_vote_account_with_seed() {
+void test_process_message_body_create_vote_account_with_seed(void) {
     uint8_t message[] = {
         1, 0, 4,
         6,
@@ -487,7 +487,7 @@ void test_process_message_body_create_vote_account_with_seed() {
     process_message_body_and_sanity_check(message, sizeof(message), 10);
 }
 
-void test_process_message_body_nonce_withdraw() {
+void test_process_message_body_nonce_withdraw(void) {
     uint8_t message[] = {
         1, 1, 3,
         6,
@@ -511,7 +511,7 @@ void test_process_message_body_nonce_withdraw() {
     process_message_body_and_sanity_check(message, sizeof(message), 5);
 }
 
-void test_process_message_body_stake_withdraw() {
+void test_process_message_body_stake_withdraw(void) {
     uint8_t message[] = {
         1, 1, 3,
         6,
@@ -535,7 +535,7 @@ void test_process_message_body_stake_withdraw() {
     process_message_body_and_sanity_check(message, sizeof(message), 5);
 }
 
-void test_process_message_body_vote_withdraw() {
+void test_process_message_body_vote_withdraw(void) {
     uint8_t message[] = {
         1, 1, 1,
         4,
@@ -557,7 +557,7 @@ void test_process_message_body_vote_withdraw() {
     process_message_body_and_sanity_check(message, sizeof(message), 5);
 }
 
-void test_process_message_body_system_nonce_authorize() {
+void test_process_message_body_system_nonce_authorize(void) {
     uint8_t message[] = {
         1, 1, 1,
         3,
@@ -578,7 +578,7 @@ void test_process_message_body_system_nonce_authorize() {
     process_message_body_and_sanity_check(message, sizeof(message), 4);
 }
 
-void test_process_message_body_stake_authorize_staker() {
+void test_process_message_body_stake_authorize_staker(void) {
     uint8_t message[] = {
         1, 1, 2,
         4,
@@ -601,7 +601,7 @@ void test_process_message_body_stake_authorize_staker() {
     process_message_body_and_sanity_check(message, sizeof(message), 4);
 }
 
-void test_process_message_body_stake_authorize_withdrawer() {
+void test_process_message_body_stake_authorize_withdrawer(void) {
     uint8_t message[] = {
         1, 1, 2,
         4,
@@ -624,7 +624,7 @@ void test_process_message_body_stake_authorize_withdrawer() {
     process_message_body_and_sanity_check(message, sizeof(message), 4);
 }
 
-void test_process_message_body_stake_authorize_withdrawer_with_custodian() {
+void test_process_message_body_stake_authorize_withdrawer_with_custodian(void) {
     uint8_t message[] = {
       3, 2, 2,
       5,
@@ -648,7 +648,7 @@ void test_process_message_body_stake_authorize_withdrawer_with_custodian() {
     process_message_body_and_sanity_check(message, sizeof(message), 5);
 }
 
-void test_process_message_body_stake_authorize_both() {
+void test_process_message_body_stake_authorize_both(void) {
     uint8_t message[] = {
         1, 1, 2,
         4,
@@ -678,7 +678,7 @@ void test_process_message_body_stake_authorize_both() {
     process_message_body_and_sanity_check(message, sizeof(message), 5);
 }
 
-void test_process_message_body_stake_authorize_staker_checked() {
+void test_process_message_body_stake_authorize_staker_checked(void) {
     uint8_t message[] = {
         2, 1, 2,
         5,
@@ -701,7 +701,7 @@ void test_process_message_body_stake_authorize_staker_checked() {
     process_message_body_and_sanity_check(message, sizeof(message), 4);
 }
 
-void test_process_message_body_stake_authorize_withdrawer_checked() {
+void test_process_message_body_stake_authorize_withdrawer_checked(void) {
     uint8_t message[] = {
         2, 1, 2,
         5,
@@ -724,7 +724,7 @@ void test_process_message_body_stake_authorize_withdrawer_checked() {
     process_message_body_and_sanity_check(message, sizeof(message), 4);
 }
 
-void test_process_message_body_stake_authorize_withdrawer_with_custodian_checked() {
+void test_process_message_body_stake_authorize_withdrawer_with_custodian_checked(void) {
     uint8_t message[] = {
       3, 2, 2,
       6,
@@ -748,7 +748,7 @@ void test_process_message_body_stake_authorize_withdrawer_with_custodian_checked
     process_message_body_and_sanity_check(message, sizeof(message), 5);
 }
 
-void test_process_message_body_stake_authorize_both_checked() {
+void test_process_message_body_stake_authorize_both_checked(void) {
     uint8_t message[] = {
         3, 2, 2,
         6,
@@ -778,7 +778,7 @@ void test_process_message_body_stake_authorize_both_checked() {
     process_message_body_and_sanity_check(message, sizeof(message), 5);
 }
 
-void test_process_message_body_vote_authorize_voter() {
+void test_process_message_body_vote_authorize_voter(void) {
     uint8_t message[] = {
         1, 1, 2,
         4,
@@ -801,7 +801,7 @@ void test_process_message_body_vote_authorize_voter() {
     process_message_body_and_sanity_check(message, sizeof(message), 4);
 }
 
-void test_process_message_body_vote_authorize_withdrawer() {
+void test_process_message_body_vote_authorize_withdrawer(void) {
     uint8_t message[] = {
         1, 1, 2,
         4,
@@ -824,7 +824,7 @@ void test_process_message_body_vote_authorize_withdrawer() {
     process_message_body_and_sanity_check(message, sizeof(message), 4);
 }
 
-void test_process_message_body_vote_authorize_both() {
+void test_process_message_body_vote_authorize_both(void) {
     uint8_t message[] = {
         1, 1, 2,
         4,
@@ -855,7 +855,7 @@ void test_process_message_body_vote_authorize_both() {
     process_message_body_and_sanity_check(message, sizeof(message), 5);
 }
 
-void test_process_message_body_vote_authorize_voter_checked() {
+void test_process_message_body_vote_authorize_voter_checked(void) {
     uint8_t message[] = {
         2, 1, 2,
         5,
@@ -878,7 +878,7 @@ void test_process_message_body_vote_authorize_voter_checked() {
     process_message_body_and_sanity_check(message, sizeof(message), 4);
 }
 
-void test_process_message_body_vote_authorize_withdrawer_checked() {
+void test_process_message_body_vote_authorize_withdrawer_checked(void) {
     uint8_t message[] = {
         2, 1, 2,
         5,
@@ -901,7 +901,7 @@ void test_process_message_body_vote_authorize_withdrawer_checked() {
     process_message_body_and_sanity_check(message, sizeof(message), 4);
 }
 
-void test_process_message_body_vote_authorize_both_checked() {
+void test_process_message_body_vote_authorize_both_checked(void) {
     uint8_t message[] = {
         2, 1, 2,
         6,
@@ -932,7 +932,7 @@ void test_process_message_body_vote_authorize_both_checked() {
     process_message_body_and_sanity_check(message, sizeof(message), 5);
 }
 
-void test_process_message_body_vote_update_node_v1_0_7() {
+void test_process_message_body_vote_update_node_v1_0_7(void) {
     uint8_t message[] = {
         1, 1, 2,
         4,
@@ -966,7 +966,7 @@ void test_process_message_body_vote_update_node_v1_0_7() {
     assert_string_equal(G_transaction_summary_text, expected);
 }
 
-void test_process_message_body_vote_update_node_v1_0_8() {
+void test_process_message_body_vote_update_node_v1_0_8(void) {
     uint8_t message[] = {
         1, 1, 2,
         4,
@@ -999,7 +999,7 @@ void test_process_message_body_vote_update_node_v1_0_8() {
     assert_string_equal(G_transaction_summary_text, expected);
 }
 
-void test_process_message_body_vote_update_commission() {
+void test_process_message_body_vote_update_commission(void) {
     uint8_t message[] = {
         2, 1, 1,
         3,
@@ -1019,7 +1019,7 @@ void test_process_message_body_vote_update_commission() {
     process_message_body_and_sanity_check(message, sizeof(message), 4);
 }
 
-void test_process_message_body_stake_delegate() {
+void test_process_message_body_stake_delegate(void) {
     uint8_t message[] = {
         2, 1, 5,
         7,
@@ -1042,7 +1042,7 @@ void test_process_message_body_stake_delegate() {
     process_message_body_and_sanity_check(message, sizeof(message), 4);
 }
 
-void test_process_message_body_stake_delegate_with_nonce() {
+void test_process_message_body_stake_delegate_with_nonce(void) {
     uint8_t message[] = {
         1, 1, 7,
         10,
@@ -1074,7 +1074,7 @@ void test_process_message_body_stake_delegate_with_nonce() {
     process_message_body_and_sanity_check(message, sizeof(message), 6);
 }
 
-void test_process_message_body_create_stake_account_and_delegate() {
+void test_process_message_body_create_stake_account_and_delegate(void) {
     uint8_t message[] = {
         3, 1, 7,
         10,
@@ -1121,7 +1121,7 @@ void test_process_message_body_create_stake_account_and_delegate() {
     process_message_body_and_sanity_check(message, sizeof(message), 11);
 }
 
-void test_process_message_body_create_stake_with_seed_account_and_delegate() {
+void test_process_message_body_create_stake_with_seed_account_and_delegate(void) {
     uint8_t message[] = {
         2, 0, 7,
         10,
@@ -1170,7 +1170,7 @@ void test_process_message_body_create_stake_with_seed_account_and_delegate() {
     process_message_body_and_sanity_check(message, sizeof(message), 13);
 }
 
-void test_process_message_body_stake_deactivate() {
+void test_process_message_body_stake_deactivate(void) {
     uint8_t message[] = {
         1, 1, 2,
         4,
@@ -1190,7 +1190,7 @@ void test_process_message_body_stake_deactivate() {
     process_message_body_and_sanity_check(message, sizeof(message), 3);
 }
 
-void test_process_message_body_stake_set_lockup() {
+void test_process_message_body_stake_set_lockup(void) {
     uint8_t message[] = {
         1, 1, 1,
         3,
@@ -1215,7 +1215,7 @@ void test_process_message_body_stake_set_lockup() {
     process_message_body_and_sanity_check(message, sizeof(message), 6);
 }
 
-void test_process_message_body_stake_set_lockup_checked() {
+void test_process_message_body_stake_set_lockup_checked(void) {
     uint8_t message[] = {
         2, 1, 1,
         4,
@@ -1240,7 +1240,7 @@ void test_process_message_body_stake_set_lockup_checked() {
 }
 
 // Using a nonce here to test worst case instruction usage as well
-void test_process_message_body_stake_split_with_nonce_v1_1() {
+void test_process_message_body_stake_split_with_nonce_v1_1(void) {
     uint8_t message[] = {
         3, 2, 3,
         8,
@@ -1287,7 +1287,7 @@ void test_process_message_body_stake_split_with_nonce_v1_1() {
 }
 
 // Using a nonce here to test worst case instruction usage as well
-void test_process_message_body_stake_split_with_nonce_v1_2() {
+void test_process_message_body_stake_split_with_nonce_v1_2(void) {
     uint8_t message[] = {
         3, 1, 3,
         8,
@@ -1328,7 +1328,7 @@ void test_process_message_body_stake_split_with_nonce_v1_2() {
     process_message_body_and_sanity_check(message, sizeof(message), 7);
 }
 
-void test_process_message_body_stake_split_with_seed_v1_1() {
+void test_process_message_body_stake_split_with_seed_v1_1(void) {
     uint8_t message[] = {
         1, 1, 2,
         5,
@@ -1362,7 +1362,7 @@ void test_process_message_body_stake_split_with_seed_v1_1() {
     process_message_body_and_sanity_check(message, sizeof(message), 7);
 }
 
-void test_process_message_body_stake_split_with_seed_v1_2() {
+void test_process_message_body_stake_split_with_seed_v1_2(void) {
     uint8_t message[] = {
         2, 0, 2,
         5,
@@ -1396,7 +1396,7 @@ void test_process_message_body_stake_split_with_seed_v1_2() {
     process_message_body_and_sanity_check(message, sizeof(message), 7);
 }
 
-void test_process_message_body_stake_merge() {
+void test_process_message_body_stake_merge(void) {
     uint8_t message[] = {
         0x01, 0x00, 0x03,
         0x06,
@@ -1437,7 +1437,7 @@ void test_process_message_body_stake_merge() {
 #define DELEGATE        DEST_ACCOUNT
 #define NEW_OWNER       DEST_ACCOUNT
 
-void test_process_message_body_spl_token_create_token() {
+void test_process_message_body_spl_token_create_token(void) {
     uint8_t message[] = {
         2, 0, 3,
         5,
@@ -1468,7 +1468,7 @@ void test_process_message_body_spl_token_create_token() {
     process_message_body_and_sanity_check(message, sizeof(message), 6);
 }
 
-void test_process_message_body_spl_token_create_account() {
+void test_process_message_body_spl_token_create_account(void) {
     uint8_t message[] = {
         0x02, 0x00, 0x03,
         0x06,
@@ -1499,7 +1499,7 @@ void test_process_message_body_spl_token_create_account() {
     process_message_body_and_sanity_check(message, sizeof(message), 6);
 }
 
-void test_process_message_body_spl_token_create_account2() {
+void test_process_message_body_spl_token_create_account2(void) {
     uint8_t message[] = {
         0x02, 0x00, 0x04,
         0x06,
@@ -1531,7 +1531,7 @@ void test_process_message_body_spl_token_create_account2() {
     process_message_body_and_sanity_check(message, sizeof(message), 6);
 }
 
-void test_process_message_body_spl_token_create_multisig() {
+void test_process_message_body_spl_token_create_multisig(void) {
     uint8_t message[] = {
         2, 0, 5,
         8,
@@ -1565,7 +1565,7 @@ void test_process_message_body_spl_token_create_multisig() {
     process_message_body_and_sanity_check(message, sizeof(message), 5);
 }
 
-void test_process_message_body_spl_token_transfer() {
+void test_process_message_body_spl_token_transfer(void) {
     uint8_t message[] = {
         1, 0, 2,
         5,
@@ -1587,7 +1587,7 @@ void test_process_message_body_spl_token_transfer() {
     process_message_body_and_sanity_check(message, sizeof(message), 5);
 }
 
-void test_process_message_body_spl_token_approve() {
+void test_process_message_body_spl_token_approve(void) {
     uint8_t message[] = {
         1, 0, 2,
         5,
@@ -1609,7 +1609,7 @@ void test_process_message_body_spl_token_approve() {
     process_message_body_and_sanity_check(message, sizeof(message), 5);
 }
 
-void test_process_message_body_spl_token_revoke() {
+void test_process_message_body_spl_token_revoke(void) {
     uint8_t message[] = {
         1, 0, 2,
         3,
@@ -1627,7 +1627,7 @@ void test_process_message_body_spl_token_revoke() {
     process_message_body_and_sanity_check(message, sizeof(message), 3);
 }
 
-void test_process_message_body_spl_token_set_authority() {
+void test_process_message_body_spl_token_set_authority(void) {
     uint8_t message[] = {
         1, 0, 1,
         3,
@@ -1648,7 +1648,7 @@ void test_process_message_body_spl_token_set_authority() {
     process_message_body_and_sanity_check(message, sizeof(message), 5);
 }
 
-void test_process_message_body_spl_token_mint_to() {
+void test_process_message_body_spl_token_mint_to(void) {
     uint8_t message[] = {
         1, 0, 0,
         4,
@@ -1669,7 +1669,7 @@ void test_process_message_body_spl_token_mint_to() {
     process_message_body_and_sanity_check(message, sizeof(message), 5);
 }
 
-void test_process_message_body_spl_token_burn() {
+void test_process_message_body_spl_token_burn(void) {
     uint8_t message[] = {
         1, 0, 0,
         4,
@@ -1690,7 +1690,7 @@ void test_process_message_body_spl_token_burn() {
     process_message_body_and_sanity_check(message, sizeof(message), 4);
 }
 
-void test_process_message_body_spl_token_close_account() {
+void test_process_message_body_spl_token_close_account(void) {
     uint8_t message[] = {
         0x01, 0x00, 0x01,
         0x03,
@@ -1709,7 +1709,7 @@ void test_process_message_body_spl_token_close_account() {
     process_message_body_and_sanity_check(message, sizeof(message), 4);
 }
 
-void test_process_message_body_spl_token_freeze_account() {
+void test_process_message_body_spl_token_freeze_account(void) {
     uint8_t message[] = {
         1, 0, 2,
         4,
@@ -1728,7 +1728,7 @@ void test_process_message_body_spl_token_freeze_account() {
     process_message_body_and_sanity_check(message, sizeof(message), 4);
 }
 
-void test_process_message_body_spl_token_thaw_account() {
+void test_process_message_body_spl_token_thaw_account(void) {
     uint8_t message[] = {
         1, 0, 2,
         4,
@@ -1747,7 +1747,7 @@ void test_process_message_body_spl_token_thaw_account() {
     process_message_body_and_sanity_check(message, sizeof(message), 4);
 }
 
-void test_process_message_body_spl_associated_token_create() {
+void test_process_message_body_spl_associated_token_create(void) {
     uint8_t message[] = {
         0x01, 0x00, 0x05,
         0x06,
@@ -1769,7 +1769,7 @@ void test_process_message_body_spl_associated_token_create() {
 }
 
 // old version of ata create that accessed the rent sysvar via account load
-void test_process_message_body_spl_associated_token_create_deprecated() {
+void test_process_message_body_spl_associated_token_create_deprecated(void) {
     uint8_t message[] = {
         0x01, 0x00, 0x05,
         0x07,
@@ -1791,7 +1791,7 @@ void test_process_message_body_spl_associated_token_create_deprecated() {
     process_message_body_and_sanity_check(message, sizeof(message), 5);
 }
 
-void test_process_message_body_spl_associated_token_create_with_transfer() {
+void test_process_message_body_spl_associated_token_create_with_transfer(void) {
     uint8_t message[] = {
         0x02, 0x00, 0x05,
         0x09,
@@ -1822,7 +1822,7 @@ void test_process_message_body_spl_associated_token_create_with_transfer() {
     process_message_body_and_sanity_check(message, sizeof(message), 9);
 }
 
-void test_process_message_body_spl_associated_token_create_with_transfer_and_assert_owner() {
+void test_process_message_body_spl_associated_token_create_with_transfer_and_assert_owner(void) {
     uint8_t message[] = {
             0x01, 0x00, 0x07,
             0x0a,
@@ -1863,7 +1863,7 @@ void test_process_message_body_spl_associated_token_create_with_transfer_and_ass
 
 /* clang-format on */
 
-int main() {
+int main(void) {
     test_process_message_body_spl_associated_token_create_with_transfer_and_assert_owner();
     test_process_message_body_spl_associated_token_create_with_transfer();
     test_process_message_body_spl_associated_token_create();

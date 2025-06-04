@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-void test_rfc3339_format() {
+void test_rfc3339_format(void) {
     char s[20];
 
     // Buffer too small fails
@@ -25,7 +25,7 @@ void test_rfc3339_format() {
     assert_string_equal(s, "9999-12-31 23:59:59");
 }
 
-int main() {
+int main(void) {
     test_rfc3339_format();
 
     printf("passed\n");

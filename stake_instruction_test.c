@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-void test_parse_delegate_stake_instructions() {
+void test_parse_delegate_stake_instructions(void) {
     uint8_t message[] = {
         1,   1,   5,   7,   204, 241, 115, 109, 41,  173, 110, 48,  24,  113, 210, 213, 163, 78,
         1,   112, 146, 114, 235, 220, 96,  185, 184, 85,  163, 27,  124, 48,  54,  250, 233, 54,
@@ -35,7 +35,7 @@ void test_parse_delegate_stake_instructions() {
     assert(parser.buffer_length == 0);
 }
 
-void test_parse_stake_initialize_instruction() {
+void test_parse_stake_initialize_instruction(void) {
 #define ACCOUNT_PUBKEY_BYTES      BYTES32_BS58_2
 #define ST_AUTHORITY_PUBKEY_BYTES BYTES32_BS58_3
 #define WD_AUTHORITY_PUBKEY_BYTES BYTES32_BS58_4
@@ -109,7 +109,7 @@ void test_parse_stake_initialize_instruction() {
     assert(parse_stake_instructions(&instruction, &header, &info) == 0);
 }
 
-void test_parse_stake_instruction_kind() {
+void test_parse_stake_instruction_kind(void) {
     enum StakeInstructionKind kind;
     uint8_t buf[] = {0, 0, 0, 0};
     Parser parser = {buf, ARRAY_LEN(buf)};
@@ -204,7 +204,7 @@ void test_parse_stake_instruction_kind() {
     assert(parse_stake_instruction_kind(&parser, &kind) == 1);
 }
 
-void test_parse_stake_authorize_enum() {
+void test_parse_stake_authorize_enum(void) {
     enum StakeAuthorize authorize;
     uint8_t buf[] = {0, 0, 0, 0};
     Parser parser = {buf, ARRAY_LEN(buf)};
@@ -233,7 +233,7 @@ void test_parse_stake_authorize_enum() {
     assert(parse_stake_authorize(&parser, &authorize) == 1);
 }
 
-void test_parse_stake_lockup_args() {
+void test_parse_stake_lockup_args(void) {
     uint8_t buf[] = {
         // All None
         0x00,
@@ -317,7 +317,7 @@ void test_parse_stake_lockup_args() {
     assert(memcmp(lockup.custodian, &custodian2, sizeof(Pubkey)) == 0);
 }
 
-void test_parse_stake_lockup_checked_args() {
+void test_parse_stake_lockup_checked_args(void) {
     uint8_t buf[] = {
         // All None
         0x00,
@@ -387,7 +387,7 @@ void test_parse_stake_lockup_checked_args() {
     assert(lockup.epoch == 5);
 }
 
-int main() {
+int main(void) {
     test_parse_delegate_stake_instructions();
     test_parse_stake_initialize_instruction();
     test_parse_stake_instruction_kind();

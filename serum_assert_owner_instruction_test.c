@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-void test_is_serum_assert_owner_program_id() {
+void test_is_serum_assert_owner_program_id(void) {
     const Pubkey serum_deployment = {{PROGRAM_ID_SERUM_ASSERT_OWNER}};
     const Pubkey phantom_deployment = {{PROGRAM_ID_SERUM_ASSERT_OWNER_PHANTOM}};
 
@@ -13,7 +13,7 @@ void test_is_serum_assert_owner_program_id() {
     assert(!is_serum_assert_owner_program_id(&system_program_id));
 }
 
-int main() {
+int main(void) {
     test_is_serum_assert_owner_program_id();
 
     printf("passed\n");
